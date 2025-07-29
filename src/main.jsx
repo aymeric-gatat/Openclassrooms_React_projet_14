@@ -6,7 +6,6 @@ import { store } from "./app/store";
 import "./styles/style.scss";
 import App from "./pages/App";
 import Employee from "./pages/Employee";
-import Test from "./pages/Test";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +14,6 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/employee" element={<Employee />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </Provider>

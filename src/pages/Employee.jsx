@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
-import TableComponent from "../components/Table/TableComponent";
+import React, { Suspense } from "react";
+const TableComponent = React.lazy(() => import("../components/Table/TableComponent"));
 
 const Employee = () => {
   const employees = useSelector((state) => state.employees.list);
@@ -9,7 +10,9 @@ const Employee = () => {
     <>
       <h1>Current Employees</h1>
       <Link to="/">Home</Link>
-      <section>{employees.length === 0 ? <p>Aucun employé n'a été ajouté pour le moment.</p> : <TableComponent array={employees} arrayHeader={true} arrayStyle={true} className={"test"} />}</section>
+      <Suspense fallback={<p>Loading ...</p>}>
+        <section>{employees.length === 0 ? <p>Aucun employé n'a été ajouté pour le moment.</p> : <TableComponent array={employees} arrayHeader={true} arrayStyle={true} className={"test"} />}</section>
+      </Suspense>
     </>
   );
 };
