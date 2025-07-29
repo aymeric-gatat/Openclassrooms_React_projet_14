@@ -1,0 +1,108 @@
+:root {
+  --primary-color-light: #a3c7d6;
+  --primary-color-normal: #5a96e3;
+  --primary-color-dark: #1a5fb4;
+  --default-color-light: #f9fafb;
+  --default-color-normal: #e9eaeb;
+  --default-color-dark: #1a1a1a;
+}
+
+.table {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 164px);
+}
+
+.table main {
+  flex: 1;
+}
+
+.table header,
+.table footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.table footer .container-pagination {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+}
+
+.table footer .container-pagination .btn-control {
+  background: none;
+  border: none;
+}
+
+.table footer .container-pagination .page-pagination {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.table footer .container-pagination .page-pagination .btn-pagination {
+  background: linear-gradient(var(--default-color-light), var(--default-color-normal));
+  border: 1px solid --default-color-dark;
+  border-radius: 2px;
+  width: 34px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  transition: all 0.3x ease-in-out;
+}
+
+.table footer .container-pagination .page-pagination .btn-pagination:hover,
+.table footer .container-pagination .page-pagination .btn-pagination.active {
+  background: var(--primary-color-normal);
+  color: var(--default-color-light);
+}
+
+// Default Style
+
+.table.default {
+  table {
+    width: calc(100vw - 128px);
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--default-color-normal);
+    border-radius: 4px;
+    overflow: hidden;
+    th,
+    td {
+      padding: 8px;
+    }
+    thead {
+      tr {
+        background-color: var(--primary-color-normal);
+        color: white;
+        text-align: left;
+        font-weight: bold;
+      }
+    }
+    tbody {
+      tr {
+        text-align: left;
+        border-bottom: 1px solid var(--default-color-light);
+        &:nth-of-type(even) {
+          background-color: var(--default-color-light);
+        }
+        &:last-of-type {
+          border-bottom: none;
+        }
+        &:hover {
+          background-color: var(--primary-color-light);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+body {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0px 24px 64px 24px;
+  font-family: sans-serif;
+}
+
+#root {
+  text-align: center;
+}
+
+// Form //
+#form_1 {
+  text-align: start;
+  min-width: 280px;
+  fieldset {
+    margin-top: 10px;
+  }
+  button#form_submit {
+    margin-top: 1rem;
+  }
+}
+.field {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  label {
+    margin-top: 1rem;
+    margin-bottom: 10px;
+  }
+}
