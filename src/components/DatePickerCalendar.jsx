@@ -5,11 +5,7 @@ function DatePickerCalendar({ currentMonth, currentYear, selectedDate, onDayClic
   const generateCalendarDays = () => {
     const totalDays = daysInMonth(currentYear, currentMonth);
     const startDay = firstDayOfMonth(currentYear, currentMonth);
-
-    const calendarDays = [];
-    for (let i = 0; i < startDay; i++) {
-      calendarDays.push(null);
-    }
+    const calendarDays = Array(startDay).fill(null);
 
     for (let day = 1; day <= totalDays; day++) {
       calendarDays.push(day);
@@ -19,6 +15,10 @@ function DatePickerCalendar({ currentMonth, currentYear, selectedDate, onDayClic
   };
 
   const calendarDays = generateCalendarDays();
+
+  const isSelectedDay = (day) => {
+    return day && selectedDate.getDate() === day && selectedDate.getMonth() === currentMonth && selectedDate.getFullYear() === currentYear;
+  };
 
   return (
     <div style={styles.calendarContainer}>
@@ -33,7 +33,6 @@ function DatePickerCalendar({ currentMonth, currentYear, selectedDate, onDayClic
           &gt;
         </button>
       </div>
-
       <div style={styles.daysHeader}>
         {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map((dayName) => (
           <div key={dayName} style={styles.dayHeaderCell}>
@@ -41,31 +40,25 @@ function DatePickerCalendar({ currentMonth, currentYear, selectedDate, onDayClic
           </div>
         ))}
       </div>
-
       <div style={styles.daysGrid}>
-        {calendarDays.map((day, index) => {
-          const isSelected = day && selectedDate.getDate() === day && selectedDate.getMonth() === currentMonth && selectedDate.getFullYear() === currentYear;
-
-          return (
-            <div
-              key={index}
-              style={{
-                ...styles.dayCell,
-                backgroundColor: isSelected ? "#eee" : "white",
-                cursor: day ? "pointer" : "default",
-              }}
-              onClick={() => day && onDayClick(day)}
-            >
-              {day || ""}
-            </div>
-          );
-        })}
+        {calendarDays.map((day, index) => (
+          <div
+            key={index}
+            style={{
+              ...styles.dayCell,
+              backgroundColor: isSelectedDay(day) ? "#eee" : "white",
+              cursor: day ? "pointer" : "default",
+            }}
+            onClick={() => day && onDayClick(day)}
+          >
+            {day || ""}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-// Un petit style inline, tu peux le mettre dans un fichier CSS
 const styles = {
   calendarContainer: {
     display: "inline-block",

@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { generateOptions } from "../utils/tableUtils";
 
 export const useTableFilter = (array = []) => {
-  const [selectedEntries, setSelectedEntries] = useState(10);
+  const [selectedEntries, setSelectedEntries] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [searchTerm, setSearchTerm] = useState("");

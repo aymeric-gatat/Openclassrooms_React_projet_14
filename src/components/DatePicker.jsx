@@ -4,90 +4,81 @@ import DatePickerCalendar from "./DatePickerCalendar";
 
 function DatePicker({ onDateChange, initialDate, label, id, name }) {
   const [selectedDate, setSelectedDate] = useState(initialDate || new Date());
-  const [inputValue, setInputValue] = useState(selectedDate && "");
+  const [inputValue, setInputValue] = useState(formatDate(selectedDate));
   const [currentMonth, setCurrentMonth] = useState(selectedDate.getMonth());
   const [currentYear, setCurrentYear] = useState(selectedDate.getFullYear());
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDayClick = (day) => {
-    const newDate = new Date(currentYear, currentMonth, day);
-    setSelectedDate(newDate);
-    setInputValue(newDate);
-    setIsOpen(false);
-
-    const syntheticEvent = {
-      target: {
-        name: name,
-        value: formatDate(newDate),
-      },
-    };
-
-    if (onDateChange) {
-      onDateChange(syntheticEvent);
-    }
+  const goToPreviousMonth = (e) => {
+    e.preventDefault();
+    setCurrentMonth((prevMonth) => {
+      const newMonth = prevMonth === 0 ? 11 : prevMonth - 1;
+      if (prevMonth === 0) {
+        setCurrentYear(currentYear - 1);
+      }
+      return newMonth;
+    });
   };
 
-  const goToPreviousMonth = () => {
-    let newMonth = currentMonth - 1;
-    let newYear = currentYear;
-    if (newMonth < 0) {
-      newMonth = 11;
-      newYear -= 1;
-    }
-    setCurrentMonth(newMonth);
-    setCurrentYear(newYear);
+  const goToNextMonth = (e) => {
+    e.preventDefault();
+    setCurrentMonth((prevMonth) => {
+      const newMonth = prevMonth === 11 ? 0 : prevMonth + 1;
+      if (prevMonth === 11) {
+        setCurrentYear(currentYear + 1);
+      }
+      return newMonth;
+    });
   };
 
-  const goToNextMonth = () => {
-    let newMonth = currentMonth + 1;
-    let newYear = currentYear;
-    if (newMonth > 11) {
-      newMonth = 0;
-      newYear += 1;
-    }
-    setCurrentMonth(newMonth);
-    setCurrentYear(newYear);
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   const handleInputBlur = () => {
-    const parsed = parseDateString(inputValue);
-    if (parsed) {
-      setSelectedDate(parsed);
-      setCurrentMonth(parsed.getMonth());
-      setCurrentYear(parsed.getFullYear());
+    const parsedDate = parseDateString(inputValue);
+    if (parsedDate) {
+      setSelectedDate(parsedDate);
+      setCurrentMonth(parsedDate.getMonth());
+      setCurrentYear(parsedDate.getFullYear());
       if (onDateChange) {
-        onDateChange(parsed);
+        onDateChange({ target: { name, value: formatDate(parsedDate) } });
       }
     } else {
-      if (selectedDate) {
-        setInputValue(formatDate(selectedDate));
-      } else {
-        setInputValue("");
-      }
+      setInputValue(formatDate(selectedDate));
     }
   };
 
+  const handleDayClick = (day) => {
+    const newDate = new Date(currentYear, currentMonth, day);
+    setSelectedDate(newDate);
+    setInputValue(formatDate(newDate));
+    setIsOpen(false);
+    if (onDateChange) {
+      onDateChange({ target: { name, value: formatDate(newDate) } });
+    }
+  };
+
+  const toggleCalendar = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <>
-      <label htmlFor={id && ""}>{label}</label>
+    <div style={{ position: "relative" }}>
+      <label htmlFor={id}>{label}</label>
       <div>
         <input
           type="text"
           id={id}
           name={name}
-          value={formatDate(inputValue)}
-          onChange={onDateChange}
+          value={inputValue}
+          onChange={handleInputChange}
           onBlur={handleInputBlur}
           placeholder="DD/MM/YYYY"
           style={{ padding: "4px", width: "120px", boxSizing: "border-box" }}
         />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsOpen(!isOpen);
-          }}
-          style={{ marginLeft: "5px", padding: "4px 8px" }}
-        >
+        <button onClick={toggleCalendar} style={{ marginLeft: "5px", padding: "4px 8px" }}>
           Ouvrir
         </button>
       </div>
@@ -103,6 +94,7 @@ function DatePicker({ onDateChange, initialDate, label, id, name }) {
             zIndex: 999,
             marginTop: "5px",
           }}
+          onClick={(e) => e.stopPropagation()}
         >
           <DatePickerCalendar
             currentMonth={currentMonth}
@@ -114,7 +106,7 @@ function DatePicker({ onDateChange, initialDate, label, id, name }) {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }
 
