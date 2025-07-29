@@ -21,7 +21,3 @@ createRoot(document.getElementById("root")).render(
     </Provider>
   </StrictMode>
 );
-
-// Modale pour validation
-// Liste déroulante
-// Tableau Librairie
