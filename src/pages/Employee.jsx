@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import React, { Suspense } from "react";
-const TableComponent = React.lazy(() => import("../components/Table/TableComponent"));
+import { TableComponent } from "@rikoou/tablio";
 
 const Employee = () => {
   const employees = useSelector((state) => state.employees.list);
