@@ -31,7 +31,7 @@ Pour initialiser le projet sur votre machine locale, suivez ces étapes :
 2. Accédez au répertoire du projet :
 
    ```bash
-   cd hrnet-react
+   cd Openclassrooms_React_projet_14
    ```
 
 3. Installez les dépendances nécessaires :
