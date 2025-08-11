@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../features/employees/employeesSlice";
 import { store } from "../app/store";
 import { departement, state } from "../data";
-import DatePicker from "./DatePicker";
-import Dropdown from "./Dropdown";
-import Modal from "./Modal";
+const DatePicker = React.lazy(() => import("./DatePicker"));
+const Dropdown = React.lazy(() => import("./Dropdown"));
+const Modal = React.lazy(() => import("./Modal"));
 
 export default function Form({ data }) {
   const dispatch = useDispatch();
